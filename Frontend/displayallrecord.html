@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NODE PROJECT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <h1 class="main-heading">RESULT MANAGEMENT SYSTEM</h1>
+    </header>
+
+
+        <!-- HTML !-->
+    <button onclick="location.href='addnewresult.html';" class="button-63" role="button">Add New Student</button>
+
+    <div id="logoutContainer">
+        <button onclick="location.href='index.html'; " id="logoutButton">Logout</button>
+    </div>
+    
+    <h1 class="resulth1">Result of all the Students</h1>
+    <div id="studentDataContainer">
+        <table id="teachertable"> 
+            <thead>
+                <tr>
+                <th>Roll Number</th>
+                <th>Name</th>
+                <th>Date of Birth</th>
+                <th>Score</th>
+                <th>Action</th>
+
+                </tr>
+            </thead>
+
+            <tbody id="studentDataBody">
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fetch student data from the Node.js API
+        let temp ;
+        fetch('http://localhost:8080/alldetails/allstudentdetails')
+            .then(response => response.json())
+            .then(studentData => {
+                var tableBody = document.getElementById('studentDataBody');
+                studentData.forEach(student => {
+                    // console.log("inside table")
+                    const row = document.createElement('tr');
+                    
+                    const date = new Date(student.DOB);
+                    const newdate = date.getDate() + '-' +  (date.getMonth()+1) + '-' + date.getFullYear();
+
+                    row.innerHTML = `
+                    
+                        <tr>
+                        <td>${student.rollno}</td>
+                        <td>${student.name}</td>
+                        <td>${newdate}</td>
+                        <td>${student.marks}</td>
+                        <td class="action-icons">
+                            <button onclick="editresult(${student.rollno})"  class="edit-icon">&#9998;</button>
+                            <button onclick="deleteresult(${student.rollno})" id=edit-result, class="delete-icon">&#128465;</button>
+                        </td>
+                        </tr>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+
+
+
+            function deleteresult(rollno)
+            {
+                fetch(`http://localhost:8080/deletestudent/delete/${rollno}` ,{
+                    method :'DELETE'
+                })
+                .then (response =>{
+                    if (response.ok){
+                        location.reload();
+                    }else{
+                        console.log("error");
+                    }
+                })
+                .catch(error => {
+                    console.log("error",error);
+                });
+            }
+
+
+
+            function editresult(rollno)
+            {
+                window.location.href = `editresult.html?rollno=${rollno}`;
+                //window.location.href="http://localhost:8080/result/studentres/"+ data[0].rollno;
+            }
+
+
+
+
+    </script>
+
+</body>
+</html>

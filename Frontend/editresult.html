@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NODE PROJECT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <h1 class="main-heading">RESULT MANAGEMENT SYSTEM</h1>
+    </header>
+
+    <button onclick="location.href='displayallrecord.html';" class="button-63" role="button">Back</button>
+
+    <div id="logoutContainer">
+      <button onclick="location.href='index.html'; " id="logoutButton">Logout</button>
+  </div>
+
+
+
+
+  <div class="container">
+    <h1>Edit Result</h1>
+    <form id="editForm>
+      <label for="rollno">Roll Number:</label>
+      <input type="text" id="rollno" name="rollno" readonly><br>
+
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required><br>
+
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" required><br>
+
+      <label for="marks">Marks:</label>
+      <input type="number" min="0" max="100" id="marks" name="marks" required><br>
+
+      <div class="buttons">
+        <button type="button" id="saveButton">Save</button>
+        <button type="reset" class="clear-button">Clear</button>
+      </div>
+    </form>
+  </div>
+
+
+  <script>
+    // Get the rollno parameter from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const rollno = urlParams.get('rollno');
+
+    // Set the rollno value in the form
+    document.getElementById('rollno').value = rollno;
+
+
+    
+    // Save button click event
+    document.getElementById('saveButton').addEventListener('click', () => {
+        const editedData = {
+            name: document.getElementById('name').value,
+            DOB: document.getElementById('dob').value,
+            marks: document.getElementById('marks').value
+        };
+
+        fetch(`http://localhost:8080/editstudent/edit/${rollno}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(editedData)
+        })
+        .then(response => {
+            if (response.ok) 
+            {
+              // console.log(name);
+              // console.log(dob);
+              // console.log(marks);
+              window.location.href="displayallrecord.html";
+            } else {
+                // Handle error
+            }
+        })
+        .catch(error => {
+            console.error('Error editing data:', error);
+        });
+        
+
+    });
+</script>
+
+
+  <script src="script.js"></script>
+
+
+<!-- 
+<footer class="site-footer">
+    <p>&copy;. All rights reserved. Created by <span class="author-name">Ankit Singh</span></p>
+</footer> -->
+
+
+</body>
+</html>

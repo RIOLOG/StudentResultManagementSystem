@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NODE PROJECT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <h1 class="main-heading">RESULT MANAGEMENT SYSTEM</h1>
+    </header>
+
+    <div id="logoutContainer">
+        <button onclick="location.href='index.html'; " id="logoutButton">Logout</button>
+    </div>
+
+    <h1>Result</h1>
+    <div id="resultContainer">
+        <table id="table">
+            <thead>
+                <tr>
+                    <th>Roll Number</th>
+                    <th>Name</th>
+                    <th>Date of Birth</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+
+            <tbody id="tbody">
+
+            </tbody>
+
+        </table>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const encodedData = urlParams.get('data');
+
+        const decodedData = decodeURIComponent(encodedData);
+        const data = JSON.parse(decodedData);
+        console.log(data);
+
+        var tbody = document.getElementById("tbody");
+
+        let row = document.createElement("tr") 
+        let c1 = document.createElement("td");
+        let c2 = document.createElement("td");
+        let c3 = document.createElement("td");
+        let c4 = document.createElement("td") 
+        console.log(data.DOB.slice(0,10));
+        console.log(new Date(data.DOB));
+
+
+        c1.innerText = data.rollno; 
+        c2.innerText = data.name; 
+        const date = new Date(data.DOB);
+        //console.log(date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate());
+        const newdate = date.getDate() + '-' +  (date.getMonth()+1) + '-' + date.getFullYear();
+
+        c3.innerText = newdate
+        c4.innerText = data.marks;
+        row.appendChild(c1); 
+        row.appendChild(c2); 
+        row.appendChild(c3); 
+        row.appendChild(c4);
+        table.appendChild(row)
+
+        // var tbody = document.getElementById("myTable");
+        // var row = tbody.insertRow(-1);
+
+        // var rollno = row.insertCell(0);
+        // var name = row.insertCell(1);
+        // var DOB = row.insertCell(2);
+        // var marks = row.insertCell(3);
+        // console.log("NAME")
+        // console.log(data.name);
+
+        // rollno.innerHTML = data.rollno;
+        // name.innerHTML = data.name;
+        // DOB.innerHTML = data.DOB;
+        // marks.innerHTML = data.marks;
+
+        
+    </script>
+
+</body>
+</html>

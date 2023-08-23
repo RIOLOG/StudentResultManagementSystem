@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NODE PROJECT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <h1 class="main-heading">RESULT MANAGEMENT SYSTEM</h1>
+    </header>
+
+    <button onclick="location.href='displayallrecord.html';" class="button-63" role="button">Back</button>
+
+    <div id="logoutContainer">
+      <button onclick="location.href='index.html'; " id="logoutButton">Logout</button>
+  </div>
+
+
+
+
+  <div class="container">
+    <h1>Add New Result</h1>
+    <form id="result-form" method="POST">
+      <label for="rollno">Roll Number:</label>
+      <input type="text" id="rollno" name="rollno" required><br>
+
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required><br>
+
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" required><br>
+
+      <label for="marks">Marks:</label>
+      <input type="number" min="0" max="100" id="marks" name="marks" required><br>
+
+      <div class="buttons">
+        <button onclick="addresult()" type="submit" class="search-button">Add</button>
+        <button type="reset" class="clear-button">Clear</button>
+    </div>
+
+
+    </form>
+  </div>
+
+
+  <script src="script.js"></script>
+
+
+<!-- 
+<footer class="site-footer">
+    <p>&copy;. All rights reserved. Created by <span class="author-name">Ankit Singh</span></p>
+</footer> -->
+
+
+</body>
+</html>
